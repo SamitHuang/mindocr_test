@@ -76,6 +76,21 @@ def test_model():
         load_param_into_net(model, param_dict)
 
 
+    import mindspore as ms
+    import time
+    import numpy as np
+
+    bs = 8
+    x = ms.Tensor(np.random.rand(bs, 3, 640, 640), dtype=ms.float32)
+    ms.set_context(mode=ms.PYNATIVE_MODE)
+
+    def predict(model, x):
+        start = time.time()
+        y = model(x)
+        print(time.time()-start)
+        print(y.shape)
+
+    predict(model, x)
 
 if __name__ == '__main__':    
     test_registry()
